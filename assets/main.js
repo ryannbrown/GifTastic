@@ -1,14 +1,14 @@
 
 
 
-var topicList = ["cats", "aliens", "explosions","dogs", "Ron Burgandy" ];
+var topicList = ["cats", "aliens", "explosions","dogs", "Ron Burgundy" ];
 
 
 function displayGIFS(){
 
 var topic = $(this).attr("data-topic");
 // var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + "&limit=10&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt"
-var queryURL = "http://api.giphy.com/v1/gifs/search?q=cats&limit=10&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt"
+var queryURL = "http://api.giphy.com/v1/gifs/search?q=guns&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt&limit=10"
 
 $.ajax({
     url: queryURL,
@@ -17,9 +17,9 @@ $.ajax({
 
     var results = response.data;
     
-    for (var i = 0; i<results.length; i++){
-
-    console.log(response.data[i].rating)
+    for (var i = 0; i < results[i].images.fixed_height.url.length; i++){
+        
+    console.log(results[i].images.fixed_height.url)
     // Creating a div to hold the movie
     var gifDiv = $("<div class='gif-dump'>");
 
@@ -33,7 +33,7 @@ $.ajax({
     gifDiv.append(pRating);
 
     // Retrieving the animated URL for the image
-    var imgURL = response.data[i].images.fixed_height.url;
+    var imgURL = results[i].images.fixed_height.url;
 
     // Creating an element to hold the image
     var image = $("<img>").attr("src", imgURL);
@@ -42,7 +42,7 @@ $.ajax({
     gifDiv.append(image);
 
     // Putting GIFS  below the previous jumbotron
-    $("#gif-dump").append(movieDiv);
+    $(".gif-dump").append(gifDiv);
     
     };
 
@@ -50,8 +50,43 @@ $.ajax({
 
 };
 
-displayGIFS();
 
+
+// displayGIFS();
+
+
+function renderButtons(){
+
+$("#buttons-view").empty();
+
+for (var i = 0; i < topicList.length; i++){
+
+    var butt = $("<button>");
+    butt.addClass("gif-btn");
+    butt.attr("data-name", topicList[i]);
+    butt.text(topicList[i]);
+    $("#buttons-view").append(butt);
+    
+    }
+
+}
+
+$("#add-gif").on("click", function(event) {
+    event.preventDefault();
+
+    var topic = $("#gif-input").val().trim();
+
+    topicList.push(topic);
+
+    renderButtons();
+
+});
+
+// Adding a click event listener to all elements with a class of "gif-btn"
+$(document).on("click", ".gif-btn", displayGIFS);
+
+// Calling the renderButtons function to display the intial buttons
+renderButtons();
 
 
 
