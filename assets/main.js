@@ -1,14 +1,15 @@
 
 
 
-var topicList = ["cats", "aliens", "explosions","dogs", "Ron Burgundy" ];
+var topicList = ["cats", "aliens", "explosions","dogs", "Ron Burgndy" ];
 
 
 function displayGIFS(){
-
+    $(".gif-dump").empty();
+    console.log(this, 'this')
 var topic = $(this).attr("data-topic");
-// var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + "&limit=10&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt"
-var queryURL = "http://api.giphy.com/v1/gifs/search?q=guns&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt&limit=10"
+var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + "&limit=10&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt"
+// var queryURL = "http://api.giphy.com/v1/gifs/search?q=guns&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt&limit=10"
 
 $.ajax({
     url: queryURL,
@@ -17,11 +18,13 @@ $.ajax({
 
     var results = response.data;
     
-    for (var i = 0; i < results[i].images.fixed_height.url.length; i++){
-        
-    console.log(results[i].images.fixed_height.url)
-    // Creating a div to hold the movie
     var gifDiv = $("<div class='gif-dump'>");
+
+    for (var i = 0; i<results.length; i++){
+
+    console.log(this)
+    // Creating a div to hold the movie
+   
 
     // Storing the rating data
     var rating = response.data[i].rating;
@@ -63,7 +66,7 @@ for (var i = 0; i < topicList.length; i++){
 
     var butt = $("<button>");
     butt.addClass("gif-btn");
-    butt.attr("data-name", topicList[i]);
+    butt.attr("data-topic", topicList[i]);
     butt.text(topicList[i]);
     $("#buttons-view").append(butt);
     
@@ -73,7 +76,7 @@ for (var i = 0; i < topicList.length; i++){
 
 $("#add-gif").on("click", function(event) {
     event.preventDefault();
-
+    
     var topic = $("#gif-input").val().trim();
 
     topicList.push(topic);
