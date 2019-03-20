@@ -1,14 +1,14 @@
 
 
 
-var topicList = ["cats", "aliens", "explosions","dogs", "Ron Burgndy" ];
+var topicList = ["cats", "aliens", "explosions","dogs", "Ron Burgundy" ];
 
 
 function displayGIFS(){
     $(".gif-dump").empty();
     console.log(this, 'this')
 var topic = $(this).attr("data-topic");
-var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + "&limit=10&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt"
+var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&limit=10&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt"
 // var queryURL = "http://api.giphy.com/v1/gifs/search?q=guns&api_key=ipfyDWOCpsecTGj757uv1iziAEcZssqt&limit=10"
 
 $.ajax({
@@ -22,9 +22,9 @@ $.ajax({
 
     for (var i = 0; i<results.length; i++){
 
-    console.log(this)
+    
     // Creating a div to hold the movie
-   
+  //  console.log(results[i].fixed_height_still.url)
 
     // Storing the rating data
     var rating = response.data[i].rating;
@@ -36,10 +36,35 @@ $.ajax({
     gifDiv.append(pRating);
 
     // Retrieving the animated URL for the image
-    var imgURL = results[i].images.fixed_height.url;
+    var imgURL = results[i].images.fixed_height_still.url;
 
     // Creating an element to hold the image
     var image = $("<img>").attr("src", imgURL);
+
+      //storing the animated image data
+      var animatedImageURL = results[i].images.fixed_height.url;
+      console.log("animated img: " + animatedImageURL);
+    
+      //adding a STILL attribute to all images
+      $("img").each(function() {
+        $(this).attr("data-animate", animatedImageURL);
+    });
+
+
+    //storing still image data
+    var stillImageURL = results[i].images.fixed_height_still.url;
+    console.log("still img: " + stillImageURL);
+
+//adding a STILL img attribute to all images
+$("img").each(function() {
+  $(this).attr("data-still", stillImageURL);
+});
+
+
+    // Adding a data-state attribute to all images
+    $("img").each(function(){
+      $(this).attr("data-state", "still")
+    })
 
     // Appending the image
     gifDiv.append(image);
@@ -53,6 +78,21 @@ $.ajax({
 
 };
 
+
+$("img").on("click", function() {
+  // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+  var state = $(this).attr("data-state");
+  // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+  // Then, set the image's data-state to animate
+  // Else set src to the data-still value
+  if (state === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+  } else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
+});
 
 
 // displayGIFS();
