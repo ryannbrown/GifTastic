@@ -133,10 +133,10 @@ $("#add-gif").on("click", function(event) {
     
     var topic = $("#gif-input").val().trim();
 
-  // if (topic === ""{
   
-  // }
-
+  if (topic === ""){
+  return false;
+  };
     topicList.push(topic);
 
     renderButtons();
