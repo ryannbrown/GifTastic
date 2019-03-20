@@ -45,7 +45,7 @@ $.ajax({
       var animatedImageURL = results[i].images.fixed_height.url;
       console.log("animated img: " + animatedImageURL);
     
-      //adding a STILL attribute to all images
+      //adding an animated attribute to all images
       $("img").each(function() {
         $(this).attr("data-animate", animatedImageURL);
     });
@@ -66,6 +66,11 @@ $("img").each(function() {
       $(this).attr("data-state", "still")
     })
 
+    $("img").each(function() {
+      $(this).attr("id", "gif");
+  });
+
+
     // Appending the image
     gifDiv.append(image);
 
@@ -78,14 +83,23 @@ $("img").each(function() {
 
 };
 
+$(".gif-dump").on("click", "#gif", function(){
+// $("#gif").on("click", function() {
 
-$("img").on("click", function() {
-  // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-  var state = $(this).attr("data-state");
-  // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-  // Then, set the image's data-state to animate
-  // Else set src to the data-still value
+
+
+  //onclick makes the image switch urls for its source
+  // var state = $(this).attr("data-state");
+ //if the state is still, this will change the src to the data-animate url
   if (state === "still") {
+
+    var imageIClickedOn = $(this);
+    // Get the value of the data-animate attribute on the img I clicked on
+    var animatedURL = imageIClickedOn.attr("data-animate");
+    // Set the src attribute on the img I clicked on
+    imageIClickedOn.attr("src", animatedURL);
+
+
     $(this).attr("src", $(this).attr("data-animate"));
     $(this).attr("data-state", "animate");
   } else {
