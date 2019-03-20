@@ -46,9 +46,9 @@ $.ajax({
       console.log("animated img: " + animatedImageURL);
     
       //adding an animated attribute to all images
-      $("img").each(function() {
-        $(this).attr("data-animate", animatedImageURL);
-    });
+      
+      image.attr("data-animate", animatedImageURL);
+    
 
 
     //storing still image data
@@ -56,32 +56,27 @@ $.ajax({
     console.log("still img: " + stillImageURL);
 
 //adding a STILL img attribute to all images
-$("img").each(function() {
-  $(this).attr("data-still", stillImageURL);
-});
-
+  image.attr("data-still", stillImageURL);
 
     // Adding a data-state attribute to all images
-    $("img").each(function(){
-      $(this).attr("data-state", "still")
-    })
-
-    $("img").each(function() {
-      $(this).attr("id", "gif");
-  });
-
-
+    
+      image.attr("data-state", "still");
+    
+//adding a GIF ID to each image
+    
+      image.attr("id", "gif");
+  
     // Appending the image
     gifDiv.append(image);
 
     // Putting GIFS  below the previous jumbotron
     $(".gif-dump").append(gifDiv);
-    
-    };
+  };
+    });
 
-  });
+  };
 
-};
+
 
 $(".gif-dump").on("click", "#gif", function(){
 // $("#gif").on("click", function() {
@@ -89,18 +84,23 @@ $(".gif-dump").on("click", "#gif", function(){
 
 
   //onclick makes the image switch urls for its source
-  // var state = $(this).attr("data-state");
+  var state = $(this).attr("data-state");
  //if the state is still, this will change the src to the data-animate url
   if (state === "still") {
 
     var imageIClickedOn = $(this);
+
+    console.log(this)
     // Get the value of the data-animate attribute on the img I clicked on
     var animatedURL = imageIClickedOn.attr("data-animate");
+
+    //Get the value of the data-still attribute on the img I clicked on
+    var stillURL = imageIClickedOn.attr("data-still")
     // Set the src attribute on the img I clicked on
     imageIClickedOn.attr("src", animatedURL);
 
 
-    $(this).attr("src", $(this).attr("data-animate"));
+    // $(this).attr("src", $(this).attr("data-animate"));
     $(this).attr("data-state", "animate");
   } else {
     $(this).attr("src", $(this).attr("data-still"));
@@ -132,6 +132,10 @@ $("#add-gif").on("click", function(event) {
     event.preventDefault();
     
     var topic = $("#gif-input").val().trim();
+
+  // if (topic === ""{
+  
+  // }
 
     topicList.push(topic);
 
