@@ -1,0 +1,43 @@
+
+.display-3{
+    font-family: 'Margarine';
+}
+
+.lead{
+    font-family: 'Margarine';
+}
+
+#buttons-view{
+text-align:center;
+}
+
+
+#gif-form{
+    text-align:center;
+}
+
+.gif-btn{
+    margin:2px;
+    font-family: 'Saira Extra Condensed', sans-serif;
+    background-color: blue;
+    color: white;
+    font-size: 22px;
+    }
+.gif-dump{
+    text-align: center;
+    /* display: grid;
+    grid-template-columns: 400px 400px;
+} */
+}
+
+p{
+    text-align:center;
+    font-family: 'Saira Extra Condensed', sans-serif;
+    font-size:18px;
+}
+
+/* .center-foot{
+    text-align:center;
+    font-family: 'Saira Extra Condensed', sans-serif;
+    font-size:18px;
+} */
